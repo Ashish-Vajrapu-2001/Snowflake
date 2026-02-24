@@ -1,0 +1,42 @@
+version: 2
+
+sources:
+  - name: bronze_crm
+    database: BRONZE_DB
+    schema: BRONZE_CRM
+    loaded_at_field: _FIVETRAN_SYNCED
+    freshness:
+      warn_after: {count: 1, period: hour}
+      error_after: {count: 6, period: hour}
+    tables:
+      - name: CUSTOMERS
+      - name: CUSTOMER_REGISTRATION_SOURCE
+      - name: INCIDENTS
+      - name: INTERACTIONS
+      - name: SURVEYS
+
+  - name: bronze_erp
+    database: BRONZE_DB
+    schema: BRONZE_ERP
+    loaded_at_field: _FIVETRAN_SYNCED
+    freshness:
+      warn_after: {count: 1, period: hour}
+      error_after: {count: 6, period: hour}
+    tables:
+      - name: OE_ORDER_HEADERS_ALL
+      - name: OE_ORDER_LINES_ALL
+      - name: ADDRESSES
+      - name: CITY_TIER_MASTER
+      - name: MTL_SYSTEM_ITEMS_B
+      - name: CATEGORIES
+      - name: BRANDS
+
+  - name: bronze_marketing
+    database: BRONZE_DB
+    schema: BRONZE_MARKETING
+    loaded_at_field: _FIVETRAN_SYNCED
+    freshness:
+      warn_after: {count: 12, period: hour}
+      error_after: {count: 24, period: hour}
+    tables:
+      - name: MARKETING_CAMPAIGNS
