@@ -1,0 +1,33 @@
+connector:
+  name: "azure_sql_erp_connector"
+  service: "sql_server_rds" # Azure SQL
+  config:
+    host: "erp-prod.database.windows.net"
+    port: 1433
+    database: "ERP_DB"
+    user: "fivetran_svc"
+    password: "{{PLACEHOLDER_SOURCE_DB_PWD}}"
+    update_method: "CDC" # Log-based CDC
+  destination:
+    service: "snowflake"
+    account: "myorg-account"
+    database: "BRONZE_DB"
+    schema: "BRONZE_ERP"
+  sync_frequency: "15" # Minutes
+  schemas:
+    - name: "ERP"
+      tables:
+        - name: "OE_ORDER_HEADERS_ALL"
+          enabled: true
+        - name: "OE_ORDER_LINES_ALL"
+          enabled: true
+        - name: "ADDRESSES"
+          enabled: true
+        - name: "CITY_TIER_MASTER"
+          enabled: true
+        - name: "MTL_SYSTEM_ITEMS_B"
+          enabled: true
+        - name: "CATEGORIES"
+          enabled: true
+        - name: "BRANDS"
+          enabled: true
