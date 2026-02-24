@@ -1,0 +1,29 @@
+connector:
+  name: "azure_sql_crm_connector"
+  service: "sql_server_rds"
+  config:
+    host: "crm-prod.database.windows.net"
+    port: 1433
+    database: "CRM_DB"
+    user: "fivetran_svc"
+    password: "{{PLACEHOLDER_SOURCE_DB_PWD}}"
+    update_method: "CDC" # Log-based CDC
+  destination:
+    service: "snowflake"
+    account: "myorg-account"
+    database: "BRONZE_DB"
+    schema: "BRONZE_CRM"
+  sync_frequency: "15" # Minutes
+  schemas:
+    - name: "CRM"
+      tables:
+        - name: "CUSTOMERS"
+          enabled: true
+        - name: "CUSTOMER_REGISTRATION_SOURCE"
+          enabled: true
+        - name: "INCIDENTS"
+          enabled: true
+        - name: "INTERACTIONS"
+          enabled: true
+        - name: "SURVEYS"
+          enabled: true
