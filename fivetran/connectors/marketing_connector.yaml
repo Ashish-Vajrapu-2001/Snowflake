@@ -1,0 +1,21 @@
+connector:
+  name: "azure_sql_marketing_connector"
+  service: "sql_server_rds"
+  config:
+    host: "mkt-prod.database.windows.net"
+    port: 1433
+    database: "MARKETING_DB"
+    user: "fivetran_svc"
+    password: "{{PLACEHOLDER_SOURCE_DB_PWD}}"
+    update_method: "FIVETRAN_TELEPORT" # Or Standard Incremental
+  destination:
+    service: "snowflake"
+    account: "myorg-account"
+    database: "BRONZE_DB"
+    schema: "BRONZE_MARKETING"
+  sync_frequency: "360" # 6 Hours
+  schemas:
+    - name: "MARKETING"
+      tables:
+        - name: "MARKETING_CAMPAIGNS"
+          enabled: true
